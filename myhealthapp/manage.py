@@ -36,6 +36,7 @@ manager.add_command('db', MigrateCommand)
 
 
 sql_alch_db = SQLAlchemy(app)
+
 # admin
 admin = Admin(app)
 admin.add_view(ModelView(User, sql_alch_db.session))

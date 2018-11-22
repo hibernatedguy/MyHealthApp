@@ -7,120 +7,55 @@ Fictitious health-care startup that does health checks for multiple connected in
 Organziation is having a trouble with querying it's single source of truth database ( postgreSQL) and need to transforming and migrating user reports data to separate database ( NoSQL ) on periodic basis to store and serve user report data via mobile client.
 
 
-# Project Structure and Rough Model
-
-## Accounts APP [ user information ]
-
-> Models
-
+# Project Structure
 ```
-User
-    username
-    password
-    email
-    registered_on
-
-Profile
-    user - onetoone-User
-    avatar
-    blood-group
-    created_at
-
-Disease
-    user - onetoone-User
-    name - 
-    details - 
-```
-
-> APIs
-
-```
-api/v1/users/                           GET/POST/PATCH/DELETE
-api/v1/<user-id>/profiles/              GET/POST/PATCH/DELETE
-api/v1/users/<user-id>/disease           GET/POST/PATCH/DELETE
-```
-
-
-
-## Machine APP
-
-> Models
-
-```
-Machine
-    - machine type
-    - machine information
-    - manufacturor
-    - created_at
+├── LICENSE
+├── README.md
+├── docs
+│   ├── postman-api-collections
+│   └── postman-api-docs
+├── myhealthapp
+│   ├── applications
+│   │   ├── __init__.py
+│   │   ├── checkups
+│   │   │   ├── __init__.py
+│   │   │   ├── models.py
+│   │   │   └── views.py
+│   │   ├── common
+│   │   │   ├── __init__.py
+│   │   │   └── models.py
+│   │   ├── machines
+│   │   │   ├── __init__.py
+│   │   │   ├── models.py
+│   │   │   └── views.py
+│   │   └── profiles
+│   │       ├── __init__.py
+│   │       ├── models.py
+│   │       └── views.py
+│   ├── config
+│   │   ├── __init__.py
+│   │   ├── development_sqlite.db
+│   │   ├── secrets.json
+│   │   └── settings.py
+│   ├── manage.py
+│   ├── migrations
+│   │   ├── README
+│   │   ├── alembic.ini
+│   │   ├── env.py
+│   │   ├── script.py.mako
+│   │   └── versions
+│   │       ├── 4cecc0d2ed8a_.py
+│   │       └── cc805ab1bc28_.py
+│   └── tests
+│       ├── __init__.py
+│       └── test_flaskr.py
+└── requirements.txt
 ```
 
-> APIs
-
-    api/v1/machines                         GET/POST/PATCH/DELETE
-
-## Checkup App [ checkup information ]
-
-> Models
-
-```   
-Checkup
-    user - onetomany-User
-    machine - onetomany-Machine
-    checkup-type - choicefield
-    checkup information
-    test_taken_by
-    created_at
-```
-
-> APIs
-
-```
-api/v1/checkups/      POST [ BULK UPLOAD ]
-```
-## Config App [ holds settings and secrets ]
-```    
-Secrets
-    - secres.json
-
-Environment Settings
-    - development.py 
-    - production.py
-    - testing.py
-```
-
-# Analytics App
-
-> APIs
-
-``` 
-user-analytics : api/v1/users/                  returns all information
-user-analytics : api/v1/users/<username>/       returns checkup information for given username
-```
-
-> Sample Data Structure
-
-```
-users : [
-
-    'user1':{
-        'checkups':[
-            {'checkup':'', 'created_at':''}
-        ],            
-    },
-    'user1':{
-        'checkups':[
-            {'checkup':'', 'created_at':''}
-        ],            
-    },
-    'user1':{
-        'checkups':[
-            {'checkup':'', 'created_at':''}
-        ],            
-    },
-    'user1':{
-        'checkups':[
-            {'checkup':'', 'created_at':''}
-        ],            
-    },
-]
-```
+> applications/* folder contains pluggable apps, which can be re used in some other projects
+> applications/<app_name>/models.py contains db-model structure
+> applications/<app_name>/views.py contains ClassBasedViews to handle HTTP requests
+> docs/* holds all documentation related stuff
+> manage.py subcommands to execute multiple tasks like, runserver, runtests, migratedb etc.
+> requirements.txt contains package information
+> config/ folders contains all configuration and secrets of project
