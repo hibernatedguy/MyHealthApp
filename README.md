@@ -26,7 +26,7 @@ Profile
     blood-group
     created_at
 
-Disese
+Disease
     user - onetoone-User
     name - 
     details - 
@@ -37,7 +37,7 @@ Disese
 ```
 api/v1/users/                           GET/POST/PATCH/DELETE
 api/v1/<user-id>/profiles/              GET/POST/PATCH/DELETE
-api/v1/users/<user-id>/Disese           GET/POST/PATCH/DELETE
+api/v1/users/<user-id>/disease           GET/POST/PATCH/DELETE
 ```
 
 
