@@ -4,7 +4,14 @@ from flask import jsonify
 
 class ReportsAPI(MethodView):
 
-    def get(self):
+    def get(self, report_id):
+        # mydict = { "name": "John", "address": "Highway 37", "online": True}
+        # mongo.db.users.insert_one(mydict)
+        # online_users = mongo.db.users.find({"online": True})
+        # for x in online_users:
+        #     print(x)
+        if report_id:
+            return jsonify({'details': '{} GET hello world'.format(report_id)})
         return jsonify({'details': 'GET hello world'})
 
     def post(self):
