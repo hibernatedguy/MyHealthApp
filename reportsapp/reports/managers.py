@@ -19,7 +19,7 @@ class UserDocumentManager():
         Check if user is already exists or not?
         If user already exist then do nothing else create user.
         """
-        user_exists = json.loads(dumps(self.fetch_users(username='python')))
+        user_exists = json.loads(dumps(self.fetch_users(username=document.get('username'))))
         if not user_exists:
             user_doc = mongo_db.db.users.insert_one(document)
             return user_doc.inserted_id, True
@@ -76,8 +76,8 @@ class ReportsDocumentManager():
     def fetch_reports(self, username=None, *args, **kwargs):
         """ Find/FindAll Reports """
         if username:
-            query = {'name': username}
-            return mongo_db.db.reports.find(query, {'_id': 0})
+            query = {'username': username}
+            return mongo_db.db.reports.find(query)
         return mongo_db.db.reports.find()
 
 

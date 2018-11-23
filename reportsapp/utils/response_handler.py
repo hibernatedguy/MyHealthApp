@@ -8,7 +8,7 @@ Extend Response Module and CustomResponse method.
 import json
 from flask import Response
 
-__all__ = ['CreateResponse', 'Response404', 'BadResponseAlreadyExist', 'DeleteResponse']
+__all__ = ['CreateResponse', 'Response404', 'BadResponseAlreadyExist', 'DeleteResponse', 'MethodNotImplemented']
 
 
 class CreateResponse(Response):
@@ -26,8 +26,8 @@ class Response404(Response):
 
     def __init__(self, response, status_code=None):
         status_code = status_code if status_code else self.default_status_code
-        details_msg = '{} Does Not Exist'.format(response)
-        super(Response404, self).__init__(json.dumps({'detail': details_msg}),
+        detail_msg = '{} Does Not Exist'.format(response)
+        super(Response404, self).__init__(json.dumps({'detail': detail_msg}),
                                           status=status_code, mimetype='application/json')
 
 
@@ -37,8 +37,8 @@ class BadResponseAlreadyExist(Response):
 
     def __init__(self, response, status_code=None):
         status_code = status_code if status_code else self.default_status_code
-        details_msg = response
-        super(BadResponseAlreadyExist, self).__init__(json.dumps({'detail': details_msg}),
+        detail_msg = response
+        super(BadResponseAlreadyExist, self).__init__(json.dumps({'detail': detail_msg}),
                                                       status=status_code, mimetype='application/json')
 
 
@@ -48,6 +48,17 @@ class DeleteResponse(Response):
 
     def __init__(self, response, status_code=None):
         status_code = status_code if status_code else self.default_status_code
-        details_msg = response
-        super(DeleteResponse, self).__init__(json.dumps({'detail': details_msg}),
+        detail_msg = response
+        super(DeleteResponse, self).__init__(json.dumps({'detail': detail_msg}),
+                                             status=status_code, mimetype='application/json')
+
+
+class MethodNotImplemented(Response):
+    """ DeleteResponse for DELETE method and returns 201-NOT-FOUND """
+    default_status_code = 405
+
+    def __init__(self, response, status_code=None):
+        status_code = status_code if status_code else self.default_status_code
+        detail_msg = 'Method Not Implemented'
+        super(MethodNotImplemented, self).__init__(json.dumps({'detail': detail_msg}),
                                              status=status_code, mimetype='application/json')

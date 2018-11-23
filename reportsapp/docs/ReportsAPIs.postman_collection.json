@@ -1,0 +1,457 @@
+{
+	"info": {
+		"_postman_id": "55b39431-d831-41ab-a888-d7bdfb764ba3",
+		"name": "ReportsAPIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b3216d55-76e7-43cf-803d-3a68f8c44579",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"ashish\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/users/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Report",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1c8df67b-e6e7-4f8e-9229-5db4b58f51c4",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n\t\"username\":\"ashish\",\n\t\"disease\":\"not yet\",\n\t\"machine\":\"XYZ\",\n\t\"taken_by\":\"ayush\",\n\t\"created_at\":\"2016-05-18T16:00:00Z\"\n},\n{\n\t\"username\":\"amit\",\n\t\"disease\":\"not yet\",\n\t\"machine\":\"XYZ\",\n\t\"taken_by\":\"ayush\",\n\t\"created_at\":\"2016-05-18T16:00:00Z\"\n}\n]"
+				},
+				"url": {
+					"raw": "{{host}}/reports/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"reports",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create Report",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"ashish\",\n\t\"disease\":\"not yet\",\n\t\"machine\":\"XYZ\",\n\t\"taken_by\":\"ayush\",\n\t\"created_at\":\"2016-05-18T16:00:00Z\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/reports/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"reports",
+								""
+							]
+						}
+					},
+					"status": "CREATED",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "41"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.14.1 Python/3.6.5"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 23 Nov 2018 17:30:31 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"report_id\": \"5bf83937abed910d6c0372a8\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Fetch User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c14987b7-dd67-4762-a509-720149b0697d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"ashish\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"priyanka\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/users/ashish/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"ashish",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c14987b7-dd67-4762-a509-720149b0697d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"ashish\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"priyanka\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/users/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c14987b7-dd67-4762-a509-720149b0697d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"priyanka\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/users/ashish/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"ashish",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch all reports",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "415514b0-535e-4f8b-bdd1-1b9fbce73f1d",
+						"exec": [
+							"pm.test(\"Lookup for username\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"ashish\");",
+							"});",
+							"pm.test(\"Lookup for disease\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"disease\");",
+							"});",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/reports/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"reports",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Fetch all reports",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"pavan\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/reports/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"reports",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "336"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.14.1 Python/3.6.5"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 23 Nov 2018 17:30:17 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"_id\": {\n            \"$oid\": \"5bf8323fabed910b03a805c6\"\n        },\n        \"username\": \"ashish\",\n        \"disease\": \"not yet\",\n        \"machine\": \"XYZ\",\n        \"taken_by\": \"ayush\",\n        \"created_at\": \"2016-05-18T16:00:00Z\"\n    },\n    {\n        \"_id\": {\n            \"$oid\": \"5bf83243abed910b03a805c8\"\n        },\n        \"username\": \"ashish\",\n        \"disease\": \"not yet\",\n        \"machine\": \"XYZ\",\n        \"taken_by\": \"ayush\",\n        \"created_at\": \"2016-05-18T16:00:00Z\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Fetch report for users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8776c332-48d6-45ec-ab33-afd74a196c5a",
+						"exec": [
+							"pm.test(\"Lookup for username\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"username\");",
+							"});",
+							"pm.test(\"Lookup for disease\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"disease\");",
+							"});",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/ashish/reports/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"ashish",
+						"reports",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"id": "5efd9d76-8dbe-4434-905d-81222180a69b",
+			"key": "host",
+			"value": "http://localhost:8080/",
+			"type": "string"
+		}
+	]
+}

@@ -1,5 +1,5 @@
 from flask.views import MethodView
-from flask import jsonify, Response
+from flask import Response
 from bson.json_util import dumps
 
 from .managers import reports_document, users_document
@@ -52,7 +52,7 @@ class UserAPI(MethodView):
         user_id, status = users_document.get_or_create(request_data)
         if status:
             return CreateResponse({'user_id': '{}'.format(user_id)})
-        return BadResponseAlreadyExist(response='User')
+        return BadResponseAlreadyExist(response='Username already exist')
 
     def delete(self, username):
         """ Delete User """
@@ -60,10 +60,6 @@ class UserAPI(MethodView):
         deleted_user_count, deleted_report_count = users_document.delete_users(username)
         details = 'Users : #{} and Reports #{} deleted.'.format(deleted_user_count, deleted_report_count)
         return DeleteResponse(response=details)
-
-    def put(self, username):
-        """ Patch User. Not needed now. """
-        return jsonify({'details': '{} PUT hello world'.format(username)})
 
 
 class UserReportsAPI(MethodView):
@@ -77,7 +73,7 @@ class UserReportsAPI(MethodView):
             if not reports:
                 return Response404(response=username)
             return Response(reports, mimetype='application/json')
-        reports = dumps(reports_document.fetch_reports_document())
+        reports = dumps(reports_document.fetch_reports())
         return Response(reports, mimetype='application/json')
 
 
@@ -93,16 +89,10 @@ class ReportsAPI(MethodView):
         return Response(reports, mimetype='application/json')
 
     def post(self):
+        report_ids = []
         request_data = request.get_json()
-        report_id = reports_document.create_reports(request_data)
-        return CreateResponse({'report_id': '{}'.format(report_id)})
-
-    # TODO : Not implemented
-    def delete(self, user_id):
-        # delete a single user
-        return jsonify({'detail': 'Method Not Implemented.'})
-
-    # TODO : Not implemented
-    def put(self, user_id):
-        # delete a single user
-        return jsonify({'detail': 'Method Not Implemented.'})
+        # using iterator to avoid
+        for data in request_data:
+            report_id = reports_document.create_reports(data)
+            report_ids.append(str(report_id))
+        return CreateResponse({'report_ids': report_ids})
