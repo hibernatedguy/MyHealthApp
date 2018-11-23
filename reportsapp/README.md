@@ -6,32 +6,6 @@ Fictitious health-care startup that does health checks for multiple connected in
 
 Organziation is having a trouble with querying it's single source of truth database ( postgreSQL) and need to transforming and migrating user reports data to separate database ( NoSQL ) on periodic basis to store and serve user report data via mobile client.
 
+# System Design
 
-# Project Structure
-```
-── README.md
-├── config
-│   ├── __init__.py
-│   ├── __pycache__
-│   │   ├── __init__.cpython-36.pyc
-│   │   └── settings.cpython-36.pyc
-│   ├── secrets.json
-│   └── settings.py
-├── docs
-│   └── ReportsAPIs.postman_collection.json
-├── manage.py
-├── reports
-│   ├── __pycache__
-│   │   ├── managers.cpython-36.pyc
-│   │   ├── models.cpython-36.pyc
-│   │   └── views.cpython-36.pyc
-│   ├── managers.py
-│   └── views.py
-├── tests
-└── utils
-    ├── __pycache__
-    │   └── response_handler.cpython-36.pyc
-    └── response_handler.py
-```
-- config : stores all configuration stuffs
-- 
+![alt system-design](http://url/to/img.png)
