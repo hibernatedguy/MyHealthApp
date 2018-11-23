@@ -18,7 +18,7 @@ mongo_db = PyMongo(app)
 report_view = ReportsAPI.as_view('user_api')
 app.add_url_rule('/reports/', defaults={'report_id': None}, view_func=report_view, methods=['GET', ])
 app.add_url_rule('/reports/', view_func=report_view, methods=['POST', ])
-app.add_url_rule('/reports/<int:report_id>/', view_func=report_view, methods=['GET', 'PUT', 'DELETE'])
+app.add_url_rule('/reports/<string:username>/', view_func=report_view, methods=['GET', 'PUT', 'DELETE'])
 
 
 # Manager Commands

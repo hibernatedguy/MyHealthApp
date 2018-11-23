@@ -18,4 +18,4 @@ def get_app_and_db(config_name):
     return app, mongo
 
 
-app_info, monod_db = get_app_and_db(secrets.get('ENVIRONMENT', 'DEVELOPMENT'))
+app_info, mongo_db = get_app_and_db(secrets.get('ENVIRONMENT', 'DEVELOPMENT'))

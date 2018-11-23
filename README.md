@@ -59,3 +59,6 @@ Organziation is having a trouble with querying it's single source of truth datab
 > manage.py subcommands to execute multiple tasks like, runserver, runtests, migratedb etc.
 > requirements.txt contains package information
 > config/ folders contains all configuration and secrets of project
+
+
+Stacks : PyMongo, MongoDB, 

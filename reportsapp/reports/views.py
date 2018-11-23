@@ -1,21 +1,27 @@
 from flask.views import MethodView
-from flask import jsonify
+from flask import jsonify, Response
+from bson.json_util import dumps
+
+from .models import reports_doc
+from utils.response_handler import CreateResponse, Response404
+from flask import request
 
 
 class ReportsAPI(MethodView):
 
-    def get(self, report_id):
-        # mydict = { "name": "John", "address": "Highway 37", "online": True}
-        # mongo.db.users.insert_one(mydict)
-        # online_users = mongo.db.users.find({"online": True})
-        # for x in online_users:
-        #     print(x)
-        if report_id:
-            return jsonify({'details': '{} GET hello world'.format(report_id)})
-        return jsonify({'details': 'GET hello world'})
+    def get(self, username):
+        if username:
+            reports = dumps(reports_doc.fetch_reports_document(username))
+            if not reports:
+                return Response404(response=username)
+            return Response(reports, mimetype='application/json')
+        reports = dumps(reports_doc.fetch_reports_document())
+        return Response(reports, mimetype='application/json')
 
     def post(self):
-        return jsonify({'details': 'POST hello world'})
+        request_data = request.get_json()
+        report_id = reports_doc.create_reports_document(request_data)
+        return CreateResponse({'report_id': '{}'.format(report_id)})
 
     def delete(self, user_id):
         # delete a single user
