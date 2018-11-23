@@ -8,4 +8,26 @@ Organziation is having a trouble with querying it's single source of truth datab
 
 # System Design
 
-![alt system-design](http://url/to/img.png)
+![alt system-design](https://raw.githubusercontent.com/codetarsier/MyHealthApp/develop/docs/healthcheckup-system-design.png)
+
+# Project Design Pattern
+
+Highly inspired by django-design-patters.
+Following DRY principle. All applications are reusable and dependencies are kept in one folder. 
+
+> Why Application Folders?
+**For reusability.**
+
+```
+e.g.
+    reports/
+        models.py
+        views.py
+        managers.py
+```
+If someone wants to reuse **reports** application in some other project it's more easier to do a copy/paste instead of copying models.py, controllers.py, views.py from different folders.
+
+
+
+
+
