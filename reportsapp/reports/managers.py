@@ -1,8 +1,10 @@
 import json
-from config import mongo_db
+from config import get_app_and_db, secrets
 from bson.json_util import dumps
 
 __all__ = ['users_document', 'reports_document']
+
+app, mongo_db = get_app_and_db(secrets.get('ENVIRONMENT'))
 
 
 class UserDocumentManager():

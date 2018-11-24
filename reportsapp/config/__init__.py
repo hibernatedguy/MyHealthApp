@@ -15,7 +15,5 @@ def get_app_and_db(config_name):
     app = Flask(__name__)
     app.config.from_object(config_by_name[config_name])
     mongo = PyMongo(app)
+    print('RUNNING ON :', config_name)
     return app, mongo
-
-
-app_info, mongo_db = get_app_and_db(secrets.get('ENVIRONMENT', 'DEVELOPMENT'))

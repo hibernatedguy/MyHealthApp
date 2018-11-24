@@ -1,18 +1,16 @@
 # import unittest
 
 from flask_script import Manager
-from flask_pymongo import PyMongo
 
 # create environment
-from config import create_app
+from config import get_app_and_db
 from config.settings import secrets
 
 # views import
 from reports.views import *
 
 # models registration
-app = create_app(secrets.get('ENVIRONMENT', 'DEVELOPMENT'))
-mongo_db = PyMongo(app)
+app, mongo_db = get_app_and_db(secrets.get('ENVIRONMENT'))
 
 # application URLs registration
 user_view = UserAPI.as_view('user_api')

@@ -25,18 +25,13 @@ class Config:
 class DevelopmentConfig(Config):
     # uncomment the line below to use postgres
     DEBUG = True
-    # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'development_sqlite.db')
-    # SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/development_db'
-    MONGO_URI = "mongodb://localhost:27017/reports_db"
+    MONGO_URI = "mongodb://localhost:27017/development_db"
 
 
 class TestingConfig(Config):
     DEBUG = True
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'flask_boilerplate_test.db')
-    # SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/test_db'
-    PRESERVE_CONTEXT_ON_EXCEPTION = False
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    MONGO_URI = "mongodb://localhost:27017/testing_db"
 
 
 class ProductionConfig(Config):
