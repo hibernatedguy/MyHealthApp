@@ -9,6 +9,7 @@ from config.flask_celery import make_celery
 
 # Views
 from applications.profiles.views import *
+from applications.rest_auth.rest_auth import *
 
 # Models registration
 from applications.profiles.models import *
@@ -21,6 +22,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 
+# Authorization Decorator
+from applications.common.decorators import token_required
+
 # TASKS
 # import reporting tasks to run in background
 from reporting_tasks import *
@@ -29,12 +33,17 @@ app = create_app(secrets.get('ENVIRONMENT'))
 celery = make_celery(app)
 sql_alch_db = SQLAlchemy(app)
 
-# application URLs registration
-userview_method = UserMethodView.as_view('user_api')
+# Application Views
+login_view = LoginView.as_view('login_api')
+userview_method = token_required(UserMethodView.as_view('user_api'))
+
+# user URLs
 app.add_url_rule('/users/', defaults={'username': None}, view_func=userview_method, methods=['GET'])
 app.add_url_rule('/users/', view_func=userview_method, methods=['POST'])
 app.add_url_rule('/users/<string:username>/', view_func=userview_method, methods=['GET', 'PUT', 'DELETE'])
 
+# auth URLs
+app.add_url_rule('/login/', view_func=login_view, methods=['GET'])
 
 # Manager Commands
 migrate = Migrate(app, db)
