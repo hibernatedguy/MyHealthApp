@@ -54,3 +54,10 @@ HealthApp : Health App written in flask with postgreSQL.
 > manage.py subcommands to execute multiple tasks like, runserver, runtests, migratedb etc.
 > requirements.txt contains package information
 > config/ folders contains all configuration and secrets of project
+
+# Celery
+To start the Celery workers, you need both a Celery worker and a Beat instance running in parallel. Here are the commands for running them:
+
+worker -A manage.celery --loglevel=info
+celery beat -A manage.celery --loglevel=info
+

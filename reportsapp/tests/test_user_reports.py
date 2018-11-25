@@ -14,7 +14,6 @@ headers = {
 }
 
 random_user_data = {'username': 'pardus{}'.format(key_gen())}
-print('USER ',random_user_data)
 
 
 def test_create_user(test_client):
