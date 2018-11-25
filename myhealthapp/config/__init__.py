@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
 
 from .settings import config_by_name
 
@@ -7,6 +8,7 @@ from .settings import config_by_name
 # from config.settings import secrets
 
 db = SQLAlchemy()
+marshmallow = Marshmallow()
 
 
 def create_app(config_name):
@@ -14,6 +16,7 @@ def create_app(config_name):
     app.config.from_object(config_by_name[config_name])
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
+    marshmallow.init_app(app)
     return app
 
 
