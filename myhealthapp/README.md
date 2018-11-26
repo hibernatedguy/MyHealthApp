@@ -58,6 +58,7 @@ HealthApp : Health App written in flask with postgreSQL.
 # Celery
 To start the Celery workers, you need both a Celery worker and a Beat instance running in parallel. Here are the commands for running them:
 
-worker -A manage.celery --loglevel=info
+celery -A manage.celery worker --loglevel=info
 celery beat -A manage.celery --loglevel=info
 
+# Send reports to reporting-server

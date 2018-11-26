@@ -29,6 +29,7 @@ from applications.common.decorators import token_required
 # import reporting tasks to run in background
 from reporting_tasks import *
 
+
 app = create_app(secrets.get('ENVIRONMENT'))
 celery = make_celery(app)
 sql_alch_db = SQLAlchemy(app)

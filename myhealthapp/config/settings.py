@@ -17,6 +17,9 @@ with open(SECRETS_FILE) as f:
     secrets = json.loads(f.read())
 
 
+REPORT_SERVER_URL = 'http://127.0.0.1:8080/reports/'
+
+
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'my_precious_secret_key')
     DEBUG = False
