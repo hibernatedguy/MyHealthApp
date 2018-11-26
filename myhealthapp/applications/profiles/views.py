@@ -32,6 +32,9 @@ class UserMethodView(MethodView):
         return jsonify(output), 200
 
     def post(self, current_user):
+        '''
+        CREATE new user
+        '''
         try:
             data = request.get_json()
             hashed_password = generate_password_hash(data.get('password'))

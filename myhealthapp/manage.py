@@ -35,19 +35,30 @@ sql_alch_db = SQLAlchemy(app)
 
 # Application Views
 login_view = LoginView.as_view('login_api')
-userview_method = token_required(UserMethodView.as_view('user_api'))
-checkups_view_method = token_required(CheckupMethodView.as_view('checkup_api'))
+user_view = token_required(UserMethodView.as_view('user_api'))
+checkups_view = token_required(UserCheckupMethodView.as_view('checkups_api'))
+checkup_reports_view = token_required(BulkCheckupReportMethodView.as_view('checkup_reports_api'))
 
-# user URLs
-app.add_url_rule('/users/', defaults={'username': None}, view_func=userview_method, methods=['GET'])
-app.add_url_rule('/users/', view_func=userview_method, methods=['POST'])
-app.add_url_rule('/users/<string:username>/', view_func=userview_method, methods=['GET', 'PUT', 'DELETE'])
+
+# ---- START OF URLS BLOCK
+# user
+app.add_url_rule('/users/', defaults={'username': None}, view_func=user_view, methods=['GET'])
+app.add_url_rule('/users/', view_func=user_view, methods=['POST'])
+app.add_url_rule('/users/<string:username>/', view_func=user_view, methods=['GET', 'PUT', 'DELETE'])
 
 # checkups
-app.add_url_rule('/users/<string:username>/checkups/', view_func=checkups_view_method, methods=['GET', 'POST'])
+app.add_url_rule('/users/<string:username>/checkups/', view_func=checkups_view, methods=['GET', 'POST'])
+app.add_url_rule('/users/<string:username>/checkups/<int:checkup_id>/', view_func=checkups_view,
+                 methods=['DELETE'])
+
+# reports
+app.add_url_rule('/reports/', view_func=checkup_reports_view, methods=['GET', 'POST'])
+
 
 # auth URLs
 app.add_url_rule('/login/', view_func=login_view, methods=['GET'])
+
+# ---- END OF URLS BLOCK
 
 # Manager Commands
 migrate = Migrate(app, db)
