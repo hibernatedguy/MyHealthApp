@@ -22,7 +22,7 @@ class LoginView(MethodView):
                 return make_response('Could not verify!', 401, {'WWW-Authenticate': 'Basic realm="Login Required"'})
 
             if check_password_hash(user.password, auth.password):
-                token = jwt.encode({'user': auth.username, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
+                token = jwt.encode({'user': auth.username, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=300)},
                                             secrets.get('SECRET_KEY'))
                 return jsonify({'token': token.decode('UTF-8')})
         return make_response('Could not verify!', 401, {'WWW-Authenticate': 'Basic realm="Login Required"'})

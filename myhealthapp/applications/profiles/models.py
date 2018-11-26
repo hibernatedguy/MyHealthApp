@@ -3,11 +3,6 @@ from ..common.models import TimeStampedBaseModel
 
 __all__ = ['User']
 
-diseases = db.Table('diseases',
-                    db.Column('disease_id', db.Integer, db.ForeignKey('disease.id'), primary_key=True),
-                    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)
-                    )
-
 
 class User(TimeStampedBaseModel):
     """An admin user capable of viewing reports.
