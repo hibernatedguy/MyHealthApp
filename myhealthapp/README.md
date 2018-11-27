@@ -4,47 +4,50 @@ HealthApp : Health App written in flask with postgreSQL.
 
 # Project Structure
 ```
-├── LICENSE
 ├── README.md
-├── docs
-│   ├── postman-api-collections
-│   └── postman-api-docs
-├── myhealthapp
-│   ├── applications
+├── __pycache__
+├── applications
+│   ├── __init__.py
+│   ├── __pycache__
+│   ├── checkups
 │   │   ├── __init__.py
-│   │   ├── checkups
-│   │   │   ├── __init__.py
-│   │   │   ├── models.py
-│   │   │   └── views.py
-│   │   ├── common
-│   │   │   ├── __init__.py
-│   │   │   └── models.py
-│   │   ├── machines
-│   │   │   ├── __init__.py
-│   │   │   ├── models.py
-│   │   │   └── views.py
-│   │   └── profiles
-│   │       ├── __init__.py
-│   │       ├── models.py
-│   │       └── views.py
-│   ├── config
+│   │   ├── __pycache__
+│   │   ├── models.py
+│   │   ├── serializers.py
+│   │   └── views.py
+│   ├── common
 │   │   ├── __init__.py
-│   │   ├── development_sqlite.db
-│   │   ├── secrets.json
-│   │   └── settings.py
-│   ├── manage.py
-│   ├── migrations
-│   │   ├── README
-│   │   ├── alembic.ini
-│   │   ├── env.py
-│   │   ├── script.py.mako
-│   │   └── versions
-│   │       ├── 4cecc0d2ed8a_.py
-│   │       └── cc805ab1bc28_.py
-│   └── tests
+│   │   ├── __pycache__
+│   │   ├── decorators.py
+│   │   └── models.py
+│   ├── profiles
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   ├── models.py
+│   │   ├── serializers.py
+│   │   └── views.py
+│   └── rest_auth
 │       ├── __init__.py
-│       └── test_flaskr.py
-└── requirements.txt
+│       ├── __pycache__
+│       └── rest_auth.py
+├── celerybeat-schedule.db
+├── celerybeat.pid
+├── checkup_log.json
+├── config
+│   ├── __init__.py
+│   ├── __pycache__
+│   ├── flask_celery.py
+│   ├── secrets.json
+│   └── settings.py
+├── docs
+│   └── Health\ APIs.postman_collection.json
+├── manage.py
+├── migrations
+├── reporting_tasks.py
+├── requirements.txt
+└── tests
+    ├── __init__.py
+    └── test_flaskr.py
 ```
 
 > applications/* folder contains pluggable apps, which can be re used in some other projects
@@ -53,7 +56,9 @@ HealthApp : Health App written in flask with postgreSQL.
 > docs/* holds all documentation related stuff
 > manage.py subcommands to execute multiple tasks like, runserver, runtests, migratedb etc.
 > requirements.txt contains package information
-> config/ folders contains all configuration and secrets of project
+> config/ folder contains all configuration and secrets of project
+> tests/ folder contains all test cases.
+> reporting_tasks.py to run celery job in background
 
 # API Doc
 [POSTMAN Doc](https://documenter.getpostman.com/view/227044/RzfassBD)
@@ -64,4 +69,13 @@ To start the Celery workers, you need both a Celery worker and a Beat instance r
 celery -A manage.celery worker --loglevel=info
 celery beat -A manage.celery --loglevel=info
 
+* please make sure redis-server is running in background
+
 # Send reports to reporting-server
+- Using simple python-request module.
+- By using celery worker sending reports to reports-server.
+- Since it's a background task so always there will be 2 calls, 
+    - 1 reading reports form database
+    - 2 read/write sync date to database
+- By using file based logging system there will be only one api call for read reports.
+- If in future we are removing this service, there will be no useless loggin-data in database.

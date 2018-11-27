@@ -1,9 +1,10 @@
 # ReportsAPP 
 
-ReportsApp :  written in flask with mongoDB.
+ReportsApp :  Flask with MongoDB.
 
 
 # Project Structure
+```
 
 ├── README.md
 ├── config
@@ -17,9 +18,35 @@ ReportsApp :  written in flask with mongoDB.
 ├── reports
 │   ├── __pycache__
 │   ├── managers.py
+│   ├── models.py
 │   └── views.py
 ├── requirements.txt
 ├── tests
+│   ├── __init__.py
+│   ├── __pycache__
+│   ├── conftest.py
+│   ├── flask_test.cfg
+│   └── test_user_reports.py
 └── utils
     ├── __pycache__
-    └── response_handler.py
+    ├── random_hex.py
+    ├── response_handler.py
+    └── rest_auth.py
+```
+
+# Models
+```
+User
+    username
+    
+Reports
+    username
+    report_details  
+```
+
+# APIs
+[Postman Api Doc](https://documenter.getpostman.com/view/227044/RzfZQD9a)
+
+# Tests
+- Postman E2E test is available with postmanin collection in **docs/** directory
+- PyTest is available in **tests/** directory
