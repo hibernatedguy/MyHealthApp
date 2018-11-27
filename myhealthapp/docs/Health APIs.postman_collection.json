@@ -1,0 +1,1176 @@
+{
+	"info": {
+		"_postman_id": "f959b073-20f2-4ffd-845f-15549d287996",
+		"name": "Health APIs",
+		"description": "Health APIs\n- User checkup report with bulk creation.\n- Background task to send HealthCheckup reports to ReportAPI service.\n- Token based authentication.\n\nUserModel\n\t- username\n\t- password\n\nCheckupModel\n\t- checkup_for - foreignkey to UserModel\n\t- checkup-details\n\n\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "rest-auth",
+			"item": [
+				{
+					"name": "Login",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "pochinki",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "bholanath",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{host}}/login/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						},
+						"description": "Authenticate login credentials and returns authtoken for api access."
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{host}}/login/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"login",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "149"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.14.1 Python/3.6.5"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 27 Nov 2018 06:20:55 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiYmhvbGFuYXRoIiwiZXhwIjoxNTQzMzE3NjU1fQ.6Ot0lEeP8eaEfYcVoLJXM_rhOT9P1QZRepCgSXIgmg8\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Registration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e2a2d097-0f8b-47c2-918a-e4a51366a730",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"bablupandit\",\n\t\"password\":\"bablupandit\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/registration/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"registration",
+								""
+							]
+						},
+						"description": "Register user with username, password"
+					},
+					"response": [
+						{
+							"name": "Registration",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"username\":\"bablupandit\",\n\t\"password\":\"bablupandit\"\n}"
+								},
+								"url": {
+									"raw": "{{host}}/registration/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"registration",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "36"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.14.1 Python/3.6.5"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 27 Nov 2018 07:11:35 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"details\": \"New user created\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "profiles",
+			"item": [
+				{
+					"name": "User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f6356176-3bda-4807-a0d4-0ff5c50a1ed8",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"pm.test(\"Body matches to Bholanath\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"bholanath\");",
+									"});",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/users/bholanath/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"bholanath",
+								""
+							]
+						},
+						"description": "1. fetch signle user if username exists else return all users\n2. if username provided in url-param return user-detail else return 404-DoesNotExists"
+					},
+					"response": [
+						{
+							"name": "User",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host}}/users/bholanath/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"users",
+										"bholanath",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "148"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.14.1 Python/3.6.5"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 27 Nov 2018 06:58:50 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"created_on\": \"2018-11-26T22:15:57.918201+00:00\",\n    \"id\": 1,\n    \"updated_on\": \"2018-11-27T12:16:28.881060+00:00\",\n    \"username\": \"bholanath\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f237fc-2d5e-43bf-b078-bf15e49dc55d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Basic bholi",
+								"disabled": true
+							},
+							{
+								"key": "x-access-token",
+								"type": "text",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/users/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						},
+						"description": "returns all the available users"
+					},
+					"response": [
+						{
+							"name": "Users",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Basic bholi",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "x-access-token",
+										"value": "{{token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host}}/users/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"users",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "278"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.14.1 Python/3.6.5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 Nov 2018 16:47:20 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"created_on\": \"2018-11-26T22:15:57.918201+00:00\",\n        \"id\": 1,\n        \"password\": \"pbkdf2:sha256:50000$BnkQVw7c$9680635c1acc349c7a533da0f6a1077b3e9893aa5f21c29a7291efe27a12d30a\",\n        \"updated_on\": \"2018-11-26T22:15:57.918201+00:00\",\n        \"username\": \"bholanath\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8aa812b7-d2c8-4f1d-b5b1-727f80baaebf",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"bholanath\",\n\t\"password\":\"panjaban\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/users/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						},
+						"description": "username : should be unique\npassword : hashed password\n\n```\nfrom werkzeug.security import generate_password_hash\n...\nhashed_password = generate_password_hash(data.get('password'))\nnew_user = User(username=data.get('username'), password=hashed_password)\n\n```"
+					},
+					"response": [
+						{
+							"name": "Create User",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-access-token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"username\":\"bholanath\",\n\t\"password\":\"panjaban\"\n}"
+								},
+								"url": {
+									"raw": "{{host}}/users/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"users",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "36"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.14.1 Python/3.6.5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 Nov 2018 16:40:07 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"details\": \"New user created\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Patch User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1691815e-e63f-4658-8559-6b07a4ac998a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"bholanath\",\n    \"password\": \"pochinki\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/users/bholanath/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"bholanath",
+								""
+							]
+						},
+						"description": "Patch all available fields, if password is provided then generated hased_password.\n```\nif 'password' in data.keys():\n    user.password = generate_password_hash(data.get('password'))\n```"
+					},
+					"response": [
+						{
+							"name": "Patch User",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-access-token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"bholanath\",\n    \"password\": \"pochinki\"\n}"
+								},
+								"url": {
+									"raw": "{{host}}/users/bholanath/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"users",
+										"bholanath",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.14.1 Python/3.6.5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 Nov 2018 16:48:33 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"details\": \"bholanath Patched\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7668af3d-8afb-47e5-b978-fd84cceedb04",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/users/bholanath/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"bholanath",
+								""
+							]
+						},
+						"description": "Delete User information"
+					},
+					"response": [
+						{
+							"name": "Delete User",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "localhost:5000/users/python/",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"users",
+										"python",
+										""
+									]
+								}
+							},
+							"status": "NO CONTENT",
+							"code": 204,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "34"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.14.1 Python/3.6.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 25 Nov 2018 10:32:37 GMT"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "checkups",
+			"item": [
+				{
+					"name": "User Based Checkups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8afa1a15-cb51-407b-89f0-ad214ebbf6ae",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/users/bholanath/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"bholanath",
+								""
+							]
+						},
+						"description": "Create checkup report for a users.\n\n`\nAPI : /users/<username>/\n`\n\n*api requires access-token"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Checkup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d470c11b-25af-4933-88f4-f91c45cec936",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/users/bholanath/reports/8/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"bholanath",
+								"reports",
+								"8",
+								""
+							]
+						},
+						"description": "Delete User's checkup report.\n\n`\nAPI : /users/<username>/reports/1/\n`\n\n\n*bulk creation is disabled to avoid mistaken actions.\n\n*api requires access-token"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Report",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f47198bf-af4c-4291-9b35-34a7bb852ade",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"type": "text",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[{\n\t\"checkup_type\":\"BLOOD PRESSURE\",\n\t\"checkup_report\":\"ALL FINE. 20.90\",\n\t\"checkup_for\":\"bholanath\",\n\t\"machine\":\"BP PRESSURE CHECK MACH\",\n\t\"taken_by\":\"Ayush\",\n\t\"disease\":\"BP\"\n},{\n\t\"checkup_type\":\"BLOOD PRESSURE\",\n\t\"checkup_report\":\"ALL FINE. 20.90\",\n\t\"checkup_for\":\"bholanath\",\n\t\"machine\":\"BP PRESSURE CHECK MACH\",\n\t\"taken_by\":\"Ayush\",\n\t\"disease\":\"BP\"\n},{\n\t\"checkup_type\":\"BLOOD PRESSURE\",\n\t\"checkup_report\":\"ALL FINE. 20.90\",\n\t\"checkup_for\":\"bholanath\",\n\t\"machine\":\"BP PRESSURE CHECK MACH\",\n\t\"taken_by\":\"Ayush\",\n\t\"disease\":\"BP\"\n}\n]"
+						},
+						"url": {
+							"raw": "{{host}}/users/bholanath/checkups/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"bholanath",
+								"checkups",
+								""
+							]
+						},
+						"description": "create bulk/single report for a users\n\n`\nAPI : /users/<username>/checkups/\n`"
+					},
+					"response": [
+						{
+							"name": "Create Report",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"type": "text",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[{\n\t\"checkup_type\":\"BLOOD PRESSURE\",\n\t\"checkup_report\":\"ALL FINE. 20.90\",\n\t\"checkup_for\":\"bholanath\",\n\t\"machine\":\"BP PRESSURE CHECK MACH\",\n\t\"taken_by\":\"Ayush\",\n\t\"disease\":\"BP\"\n},{\n\t\"checkup_type\":\"BLOOD PRESSURE\",\n\t\"checkup_report\":\"ALL FINE. 20.90\",\n\t\"checkup_for\":\"bholanath\",\n\t\"machine\":\"BP PRESSURE CHECK MACH\",\n\t\"taken_by\":\"Ayush\",\n\t\"disease\":\"BP\"\n},{\n\t\"checkup_type\":\"BLOOD PRESSURE\",\n\t\"checkup_report\":\"ALL FINE. 20.90\",\n\t\"checkup_for\":\"bholanath\",\n\t\"machine\":\"BP PRESSURE CHECK MACH\",\n\t\"taken_by\":\"Ayush\",\n\t\"disease\":\"BP\"\n}\n]"
+								},
+								"url": {
+									"raw": "{{host}}/users/bholanath/checkups/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"users",
+										"bholanath",
+										"checkups",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "40"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.14.1 Python/3.6.5"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 27 Nov 2018 06:41:22 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"details\": \"User checkup created\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Bulk Checkups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1de4d14f-bfdb-4b22-929d-135f5e8e6cfa",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/reports/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"reports",
+								""
+							]
+						},
+						"description": "Fetch all the available checkup reports in database.\n\n`\nAPI : /reports/\n`\n\n*api requires access-token"
+					},
+					"response": [
+						{
+							"name": "Bulk Checkups",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host}}/reports/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"reports",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "9808"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.14.1 Python/3.6.5"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 27 Nov 2018 06:41:48 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-26T23:08:49.344315+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 6,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-26T23:08:49.344315+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-26T23:08:50.242466+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 7,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-26T23:08:50.242466+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-26T23:08:51.392697+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 8,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-26T23:08:51.392697+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-26T23:08:53.801908+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 9,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-26T23:08:53.801908+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-26T23:14:31.647033+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 10,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-26T23:14:31.647033+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-26T23:16:04.766366+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 11,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-26T23:16:04.766366+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-26T23:16:04.804148+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 12,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-26T23:16:04.804148+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-26T23:16:04.814747+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 13,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-26T23:16:04.814747+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-26T23:19:09.403471+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 14,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-26T23:19:09.403471+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-26T23:19:09.479942+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 15,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-26T23:19:09.479942+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-26T23:19:09.491247+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 16,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-26T23:19:09.491247+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-26T23:20:06.728396+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 17,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-26T23:20:06.728396+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-26T23:20:06.774415+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 18,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-26T23:20:06.774415+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-26T23:20:06.803044+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 19,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-26T23:20:06.803044+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-26T23:20:23.176409+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 20,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-26T23:20:23.176409+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-26T23:20:23.205436+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 21,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-26T23:20:23.205436+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-26T23:20:23.219892+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 22,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-26T23:20:23.219892+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-27T00:01:26.324273+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 23,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-27T00:01:26.324273+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-27T00:01:26.379458+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 24,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-27T00:01:26.379458+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-27T00:01:26.384771+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 25,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-27T00:01:26.384771+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-27T00:21:56.690611+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 26,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-27T00:21:56.690611+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-27T00:21:56.715081+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 27,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-27T00:21:56.715081+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-27T00:21:56.720283+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 28,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-27T00:21:56.720283+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-27T00:22:10.552538+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 29,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-27T00:22:10.552538+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-27T00:23:12.714598+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 30,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-27T00:23:12.714598+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-27T00:59:02.039082+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 31,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-27T00:59:02.039082+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-27T11:51:33.245687+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 32,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-27T11:51:33.245687+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-27T12:11:22.384771+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 33,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-27T12:11:22.384771+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-27T12:11:22.394299+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 34,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-27T12:11:22.394299+00:00\"\n    },\n    {\n        \"checkup_for\": 1,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-27T12:11:22.401368+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 35,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-27T12:11:22.401368+00:00\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Bulk Create Checkups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e8a9ccb2-6db5-4913-96e6-7e61975f0633",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"type": "text",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[{\n\t\"checkup_type\":\"BLOOD PRESSURE\",\n\t\"checkup_report\":\"ALL FINE. 20.90\",\n\t\"checkup_for\":\"bholanath\",\n\t\"machine\":\"BP PRESSURE CHECK MACH\",\n\t\"taken_by\":\"Ayush\",\n\t\"disease\":\"BP\"\n},{\n\t\"checkup_type\":\"BLOOD PRESSURE\",\n\t\"checkup_report\":\"ALL FINE. 20.90\",\n\t\"checkup_for\":\"bholanath\",\n\t\"machine\":\"BP PRESSURE CHECK MACH\",\n\t\"taken_by\":\"Ayush\",\n\t\"disease\":\"BP\"\n},{\n\t\"checkup_type\":\"BLOOD PRESSURE\",\n\t\"checkup_report\":\"ALL FINE. 20.90\",\n\t\"checkup_for\":\"bholanath\",\n\t\"machine\":\"BP PRESSURE CHECK MACH\",\n\t\"taken_by\":\"Ayush\",\n\t\"disease\":\"BP\"\n}\n]"
+						},
+						"url": {
+							"raw": "{{host}}/reports/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"reports",
+								""
+							]
+						},
+						"description": "create reports in bulk."
+					},
+					"response": [
+						{
+							"name": "Bulk Create Checkups",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"type": "text",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[{\n\t\"checkup_type\":\"BLOOD PRESSURE\",\n\t\"checkup_report\":\"ALL FINE. 20.90\",\n\t\"checkup_for\":\"bholanath\",\n\t\"machine\":\"BP PRESSURE CHECK MACH\",\n\t\"taken_by\":\"Ayush\",\n\t\"disease\":\"BP\"\n},{\n\t\"checkup_type\":\"BLOOD PRESSURE\",\n\t\"checkup_report\":\"ALL FINE. 20.90\",\n\t\"checkup_for\":\"bholanath\",\n\t\"machine\":\"BP PRESSURE CHECK MACH\",\n\t\"taken_by\":\"Ayush\",\n\t\"disease\":\"BP\"\n},{\n\t\"checkup_type\":\"BLOOD PRESSURE\",\n\t\"checkup_report\":\"ALL FINE. 20.90\",\n\t\"checkup_for\":\"bholanath\",\n\t\"machine\":\"BP PRESSURE CHECK MACH\",\n\t\"taken_by\":\"Ayush\",\n\t\"disease\":\"BP\"\n}\n]"
+								},
+								"url": {
+									"raw": "{{host}}/reports/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"reports",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "40"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.14.1 Python/3.6.5"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 27 Nov 2018 06:21:33 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"details\": \"User checkup created\"\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "ded62c3d-086b-4e2a-9523-0bc3ce9c51c4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "3a80dccf-526b-467f-83a3-f5fa03894ec6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

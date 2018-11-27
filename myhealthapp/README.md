@@ -55,6 +55,9 @@ HealthApp : Health App written in flask with postgreSQL.
 > requirements.txt contains package information
 > config/ folders contains all configuration and secrets of project
 
+# API Doc
+[POSTMAN Doc](https://documenter.getpostman.com/view/227044/RzfassBD)
+
 # Celery
 To start the Celery workers, you need both a Celery worker and a Beat instance running in parallel. Here are the commands for running them:
 
