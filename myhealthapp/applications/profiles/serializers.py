@@ -10,5 +10,5 @@ class UserSchema(marshmallow.ModelSchema):
         model = User
 
 
-UserSerializer = UserSchema()
-UsersSerializer = UserSchema(many=True)
+UserSerializer = UserSchema(exclude=['password'])
+UsersSerializer = UserSchema(exclude=['password'], many=True)

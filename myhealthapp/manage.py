@@ -35,7 +35,7 @@ celery = make_celery(app)
 sql_alch_db = SQLAlchemy(app)
 
 # Application Views
-login_view = LoginView.as_view('login_api')
+rest_auth_view = RestAuthView.as_view('rest_auth_api')
 user_view = token_required(UserMethodView.as_view('user_api'))
 checkups_view = token_required(UserCheckupMethodView.as_view('checkups_api'))
 checkup_reports_view = token_required(BulkCheckupReportMethodView.as_view('checkup_reports_api'))
@@ -57,7 +57,8 @@ app.add_url_rule('/reports/', view_func=checkup_reports_view, methods=['GET', 'P
 
 
 # auth URLs
-app.add_url_rule('/login/', view_func=login_view, methods=['GET'])
+app.add_url_rule('/login/', view_func=rest_auth_view, methods=['GET'])
+app.add_url_rule('/registration/', view_func=rest_auth_view, methods=['POST'])
 
 # ---- END OF URLS BLOCK
 
