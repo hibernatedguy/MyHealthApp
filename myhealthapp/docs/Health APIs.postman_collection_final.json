@@ -20,12 +20,12 @@
 							"basic": [
 								{
 									"key": "password",
-									"value": "pochinki",
+									"value": "bablupandit",
 									"type": "string"
 								},
 								{
 									"key": "username",
-									"value": "bholanath",
+									"value": "bablupandit",
 									"type": "string"
 								}
 							]
@@ -35,8 +35,8 @@
 							{
 								"key": "Content-Type",
 								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"type": "text",
+								"value": "application/json"
 							}
 						],
 						"body": {},
@@ -124,13 +124,13 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"type": "text",
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"username\":\"bablupandit\",\n\t\"password\":\"bablupandit\"\n}"
+							"raw": "{\n\t\"username\":\"bablupandit23\",\n\t\"password\":\"bablupandit23\"\n}"
 						},
 						"url": {
 							"raw": "{{host}}/registration/",
@@ -141,8 +141,7 @@
 								"registration",
 								""
 							]
-						},
-						"description": "Register user with username, password"
+						}
 					},
 					"response": [
 						{
@@ -240,13 +239,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/users/bholanath/",
+							"raw": "{{host}}/users/pardus7dB/",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"users",
-								"bholanath",
+								"pardus7dB",
 								""
 							]
 						},
@@ -772,7 +771,7 @@
 							{
 								"key": "x-access-token",
 								"type": "text",
-								"value": "{{token}}"
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoicGFyZHVzMjkxIiwiZXhwIjoxNTQzMzYyOTYwfQ.3N-jGjd28s8DVbSuR3pdWV3gmIIdonNGuxxcVWH49sU"
 							}
 						],
 						"body": {
@@ -780,19 +779,73 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/users/bholanath/",
+							"raw": "{{host}}/users/bholanath/checkups/",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"users",
 								"bholanath",
+								"checkups",
 								""
 							]
 						},
 						"description": "Create checkup report for a users.\n\n`\nAPI : /users/<username>/\n`\n\n*api requires access-token"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "User Based Checkups",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"type": "text",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoicGFyZHVzMjkxIiwiZXhwIjoxNTQzMzYyOTYwfQ.3N-jGjd28s8DVbSuR3pdWV3gmIIdonNGuxxcVWH49sU"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host}}/users/bholanath/checkups/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"users",
+										"bholanath",
+										"checkups",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "989"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.14.1 Python/3.6.5"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 27 Nov 2018 19:29:26 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"checkup_for\": 69,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-28T00:59:23.059824+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 111,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-28T00:59:23.059824+00:00\"\n    },\n    {\n        \"checkup_for\": 69,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-28T00:59:23.074360+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 112,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-28T00:59:23.074360+00:00\"\n    },\n    {\n        \"checkup_for\": 69,\n        \"checkup_report\": \"ALL FINE. 20.90\",\n        \"checkup_type\": \"BLOOD PRESSURE\",\n        \"created_on\": \"2018-11-28T00:59:23.080426+00:00\",\n        \"disease\": \"BP\",\n        \"id\": 113,\n        \"machine\": \"BP PRESSURE CHECK MACH\",\n        \"taken_by\": \"Ayush\",\n        \"updated_on\": \"2018-11-28T00:59:23.080426+00:00\"\n    }\n]"
+						}
+					]
 				},
 				{
 					"name": "DELETE Checkup",
@@ -824,21 +877,75 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/users/bholanath/reports/8/",
+							"raw": "{{host}}/users/bholanath/checkups/111/",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"users",
 								"bholanath",
-								"reports",
-								"8",
+								"checkups",
+								"111",
 								""
 							]
 						},
 						"description": "Delete User's checkup report.\n\n`\nAPI : /users/<username>/reports/1/\n`\n\n\n*bulk creation is disabled to avoid mistaken actions.\n\n*api requires access-token"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "DELETE Checkup",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "x-access-token",
+										"type": "text",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host}}/users/bholanath/checkups/111/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"users",
+										"bholanath",
+										"checkups",
+										"111",
+										""
+									]
+								}
+							},
+							"status": "NO CONTENT",
+							"code": 204,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "42"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.14.1 Python/3.6.5"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 27 Nov 2018 19:29:36 GMT"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "Create Report",
@@ -940,7 +1047,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Tue, 27 Nov 2018 06:41:22 GMT"
+									"value": "Tue, 27 Nov 2018 19:29:23 GMT"
 								}
 							],
 							"cookie": [],

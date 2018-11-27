@@ -1,0 +1,995 @@
+{
+	"info": {
+		"_postman_id": "55b39431-d831-41ab-a888-d7bdfb764ba3",
+		"name": "ReportsAPIs",
+		"description": "Service to store user-test-reports in mongoDB.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b3216d55-76e7-43cf-803d-3a68f8c44579",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"ashish\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/users/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						""
+					]
+				},
+				"description": "create User record\n- username is required"
+			},
+			"response": [
+				{
+					"name": "Create User",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"ashish\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/users/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "52692c63-382f-4c78-aac1-ed900d9166fd",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"pm.test(\"Check for TOKEN\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"token\");",
+							"});",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "pochinki",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "bholanath",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/login/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"login",
+						""
+					]
+				},
+				"description": "Authenticate login credentials and returns authtoken for api access.\n\nIt  calls the LOGIN_API of HealthApp where all user exists. If it returns unauthenticated then it means provided credentials are wrong."
+			},
+			"response": [
+				{
+					"name": "Login",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{host}}/login/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "149"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.14.1 Python/3.6.5"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 27 Nov 2018 15:00:26 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiYmhvbGFuYXRoIiwiZXhwIjoxNTQzMzQ4Nzk2fQ.B2TGSZtzfvS6_VBjj36l9Mu6qfXPNGe0Sr52UmXWa0o\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Report",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1c8df67b-e6e7-4f8e-9229-5db4b58f51c4",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n\t\"username\":\"ashish\",\n\t\"disease\":\"BS\",\n\t\"machine\":\"BS_CHECK_MMK\",\n\t\"taken_by\":\"ayush\",\n\t\"created_at\":\"2016-05-18T16:00:00Z\"\n},\n{\n\t\"username\":\"amit\",\n\t\"disease\":\"BP\",\n\t\"machine\":\"BP_PRESSURE_CHECK_MMK\",\n\t\"taken_by\":\"ayush\",\n\t\"created_at\":\"2016-05-18T16:00:00Z\"\n}\n]"
+				},
+				"url": {
+					"raw": "{{host}}/reports/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"reports",
+						""
+					]
+				},
+				"description": "creates multiple reports.\nreport fields are,\n- username [ report belongs to ]\n- disease [ type of disease]\n- machine [ type of machine ]\n- taken_by [ report taken by ]\n- created_at [ report submitted on ]"
+			},
+			"response": [
+				{
+					"name": "Create Report",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"ashish\",\n\t\"disease\":\"not yet\",\n\t\"machine\":\"XYZ\",\n\t\"taken_by\":\"ayush\",\n\t\"created_at\":\"2016-05-18T16:00:00Z\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/reports/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"reports",
+								""
+							]
+						}
+					},
+					"status": "CREATED",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "41"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.14.1 Python/3.6.5"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 23 Nov 2018 17:30:31 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"report_id\": \"5bf83937abed910d6c0372a8\"\n}"
+				},
+				{
+					"name": "Create Report",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[{\n\t\"username\":\"ashish\",\n\t\"disease\":\"BS\",\n\t\"machine\":\"BS_CHECK_MMK\",\n\t\"taken_by\":\"ayush\",\n\t\"created_at\":\"2016-05-18T16:00:00Z\"\n},\n{\n\t\"username\":\"amit\",\n\t\"disease\":\"BP\",\n\t\"machine\":\"BP_PRESSURE_CHECK_MMK\",\n\t\"taken_by\":\"ayush\",\n\t\"created_at\":\"2016-05-18T16:00:00Z\"\n}\n]"
+						},
+						"url": {
+							"raw": "{{host}}/reports/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"reports",
+								""
+							]
+						}
+					},
+					"status": "CREATED",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "72"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.14.1 Python/3.6.5"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 23 Nov 2018 19:49:45 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"report_ids\": [\n        \"5bf859d8abed9103d40c61a5\",\n        \"5bf859d9abed9103d40c61a6\"\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Fetch User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c14987b7-dd67-4762-a509-720149b0697d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"ashish\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/ashish/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"ashish",
+						""
+					]
+				},
+				"description": "fetch single user information\n\nAPI - /users/[username]/"
+			},
+			"response": [
+				{
+					"name": "Fetch User",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/users/ashish/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"ashish",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "69"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.14.1 Python/3.6.5"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 23 Nov 2018 19:19:38 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"_id\": {\n            \"$oid\": \"5bf83f36abed910df385fc6f\"\n        },\n        \"username\": \"ashish\"\n    }\n]"
+				},
+				{
+					"name": "Fetch User",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/users/ashish/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"ashish",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "69"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.14.1 Python/3.6.5"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 23 Nov 2018 19:49:58 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"_id\": {\n            \"$oid\": \"5bf859ceabed9103d40c61a4\"\n        },\n        \"username\": \"ashish\"\n    }\n]"
+				},
+				{
+					"name": "Fetch User",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/users/ashish/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"ashish",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "69"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.14.1 Python/3.6.5"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 23 Nov 2018 19:19:38 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"_id\": {\n            \"$oid\": \"5bf83f36abed910df385fc6f\"\n        },\n        \"username\": \"ashish\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Fetch Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c14987b7-dd67-4762-a509-720149b0697d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"ashish\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						""
+					]
+				},
+				"description": "fetch all users"
+			},
+			"response": [
+				{
+					"name": "Fetch Users",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/users/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "345"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.14.1 Python/3.6.5"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 23 Nov 2018 19:48:10 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"_id\": {\n            \"$oid\": \"5bf831d4abed910b03a805c5\"\n        },\n        \"username\": \"pavan\"\n    },\n    {\n        \"_id\": {\n            \"$oid\": \"5bf83983abed910d6c0372aa\"\n        },\n        \"username\": \"priyanka\"\n    },\n    {\n        \"_id\": {\n            \"$oid\": \"5bf83d9cabed910df385fc6e\"\n        },\n        \"username\": \"ashish1\"\n    },\n    {\n        \"_id\": {\n            \"$oid\": \"5bf83f36abed910df385fc6f\"\n        },\n        \"username\": \"ashish\"\n    },\n    {\n        \"_id\": {\n            \"$oid\": \"5bf84227abed910eb2f8d7f3\"\n        },\n        \"username\": \"amit\"\n    }\n]"
+				},
+				{
+					"name": "Fetch Users",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/users/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "204"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.14.1 Python/3.6.5"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 23 Nov 2018 19:50:46 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"_id\": {\n            \"$oid\": \"5bf831d4abed910b03a805c5\"\n        },\n        \"username\": \"pavan\"\n    },\n    {\n        \"_id\": {\n            \"$oid\": \"5bf859ceabed9103d40c61a4\"\n        },\n        \"username\": \"ashish\"\n    },\n    {\n        \"_id\": {\n            \"$oid\": \"5bf859d9abed9103d40c61a7\"\n        },\n        \"username\": \"amit\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Delete User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c14987b7-dd67-4762-a509-720149b0697d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/ashish/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"ashish",
+						""
+					]
+				},
+				"description": "delete user and user's reports.\n\nAPI - users/[username]/"
+			},
+			"response": [
+				{
+					"name": "Delete User",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/users/ashish/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"ashish",
+								""
+							]
+						}
+					},
+					"status": "NO CONTENT",
+					"code": 204,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "48"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.14.1 Python/3.6.5"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 23 Nov 2018 19:50:27 GMT"
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Fetch all reports",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "415514b0-535e-4f8b-bdd1-1b9fbce73f1d",
+						"exec": [
+							"pm.test(\"Lookup for username\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"ashish\");",
+							"});",
+							"pm.test(\"Lookup for disease\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"disease\");",
+							"});",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/reports/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"reports",
+						""
+					]
+				},
+				"description": "show all available reports"
+			},
+			"response": [
+				{
+					"name": "Fetch all reports",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"pavan\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/reports/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"reports",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "336"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.14.1 Python/3.6.5"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 23 Nov 2018 17:30:17 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"_id\": {\n            \"$oid\": \"5bf8323fabed910b03a805c6\"\n        },\n        \"username\": \"ashish\",\n        \"disease\": \"not yet\",\n        \"machine\": \"XYZ\",\n        \"taken_by\": \"ayush\",\n        \"created_at\": \"2016-05-18T16:00:00Z\"\n    },\n    {\n        \"_id\": {\n            \"$oid\": \"5bf83243abed910b03a805c8\"\n        },\n        \"username\": \"ashish\",\n        \"disease\": \"not yet\",\n        \"machine\": \"XYZ\",\n        \"taken_by\": \"ayush\",\n        \"created_at\": \"2016-05-18T16:00:00Z\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Fetch report for users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8776c332-48d6-45ec-ab33-afd74a196c5a",
+						"exec": [
+							"pm.test(\"Lookup for username\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"username\");",
+							"});",
+							"pm.test(\"Lookup for disease\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"disease\");",
+							"});",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/ashish/reports/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"ashish",
+						"reports",
+						""
+					]
+				},
+				"description": "fetch user's reports\n\nAPI - users/[users]/reports/"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "799bf90e-0044-4e1e-94f0-238fef3e1ccf",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "6b61a896-7d35-4c2e-8b94-78732355baed",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "69155060-ec3f-4075-9483-a819e3c75462",
+			"key": "host",
+			"value": "http://localhost:8080/",
+			"type": "string"
+		}
+	]
+}
