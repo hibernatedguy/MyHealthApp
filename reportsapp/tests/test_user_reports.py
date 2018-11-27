@@ -1,9 +1,3 @@
-"""
-This file (test_users.py) contains the functional tests for the users blueprint.
-
-These tests use GETs and POSTs to different URLs to check for the proper behavior
-of the users blueprint.
-"""
 import json
 from utils.random_hex import key_gen
 

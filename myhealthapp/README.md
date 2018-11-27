@@ -66,6 +66,9 @@ psql -U postgres -c "create database development_db"
 # API Doc
 [POSTMAN Doc](https://documenter.getpostman.com/view/227044/RzfassBD)
 
+# Postman Collection
+visit **docs/** directory
+
 # Celery
 To start the Celery workers, you need both a Celery worker and a Beat instance running in parallel. Here are the commands for running them:
 

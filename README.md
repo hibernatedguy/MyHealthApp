@@ -6,7 +6,7 @@ Fictitious health-care startup that does health checks for multiple connected in
 
 Organziation is having a trouble with querying it's single source of truth database ( postgreSQL) and need to transforming and migrating user reports data to separate database ( NoSQL ) on periodic basis to store and serve user report data via mobile client.
 
-Project contains two services,
+Project contains two services along with documentation,
 - myhealthapp : to collect reports from doctors and machine
 - reportsapp : for client's to brow the reports.
 
@@ -14,16 +14,18 @@ Project contains two services,
 
 # System Design
 
-![alt system-design](https://raw.githubusercontent.com/codetarsier/MyHealthApp/develop/docs/healthcheckup-system-design.png)
+![alt system-design](https://github.com/codetarsier/MyHealthApp/blob/7ae896aba01040c8a575c4477f604dcdae62159d/docs/healthcheckup-system-design.jpg?raw=true)
 
 ### System Workflow
 1. User comes for health checkup
 2. With HealthCheckup Machine doctor does the health checkup and machine stores all these reports in it's local memory.
 3. **MyHealthCheckupApp** mobile/tab application pulls those reports from HC-Machine.
 4. **MyHealthCheckupApp** sends all the reports to MyHealthApp-API backend server.
-5. While saving all reports in postgreSQL database, post_save signal triggers and all reports goes in to a background task.
-6. As soon as TaskRunner gets these reports, it sends them to **ReportsApp-Server** using ReportsAPI backend server. 
+5. TaskRunner runs a background task and keeps checking for the new record on some interval ( *Interval Time* can be set in settings file ). TaskRunner fetches the record and stores last **checkup-reportID** and when next time it runs, it fetches the incremental reports from previously stored checkup-reportID.
+6. TaskRunner converts these reports into JSON then it sends them to **ReportsApp-Server** using ReportsAPI. 
 7. Client/Customer login into ReportsApp mobile application and browse those reports from ReportsApp-API backend server.
+8. When client provides username/password it gets authenticated from MyHealthApp-API.
+9. After authentication user can browse Reports.
 
 # Project Design Pattern
 
@@ -45,11 +47,11 @@ If someone wants to reuse **profiles** application in some other project it's mo
 
 > ### Q. Why ClassBasedViews instead of api's with @api decorator?
 
-Ans. **ClassBasedView** is a callable which takes a request and returns a response. This can be more than just a function and Flask provides it. It gives more freedom in terms of creating factory methods, mixins and inheritence. Flask call it as a MethodViews.
+Ans. It gives more freedom in terms of creating factory methods, mixins and inheritence. Flask call it as a MethodViews.
 
 for more details : [classbased-views method-views](http://flask.pocoo.org/docs/0.12/views/#method-views-for-apis)
 
-> ### Celery and Background Job
+> ### Q. Use of Celery and Background Job
 Ans. Using threading concept to push data on different server.
 
 # Sample Project Structure
