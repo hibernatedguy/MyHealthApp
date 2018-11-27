@@ -60,6 +60,9 @@ HealthApp : Health App written in flask with postgreSQL.
 > tests/ folder contains all test cases.
 > reporting_tasks.py to run celery job in background
 
+# Create database
+psql -U postgres -c "create database development_db"
+
 # API Doc
 [POSTMAN Doc](https://documenter.getpostman.com/view/227044/RzfassBD)
 
@@ -79,3 +82,6 @@ celery beat -A manage.celery --loglevel=info
     - 2 read/write sync date to database
 - By using file based logging system there will be only one api call for read reports.
 - If in future we are removing this service, there will be no useless loggin-data in database.
+
+# Authentication
+- Token based authentication on CheckupsAPI

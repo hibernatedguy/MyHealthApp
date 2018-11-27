@@ -8,7 +8,7 @@ from datetime import timedelta
 
 from config.flask_celery import make_celery
 from config import create_app
-from config.settings import secrets, REPORT_SERVER_URL
+from config.settings import secrets, REPORT_SERVER_URL, CELERY_TASK_SCHEDULER_IN_SEC
 # from flask_sqlalchemy import SQLAlchemy
 
 from applications.checkups.models import Checkup
@@ -32,7 +32,7 @@ def set_new_sync_id(checkup_id):
         json.dump(data, outfile)
 
 
-@periodic_task(run_every=timedelta(seconds=5))
+@periodic_task(run_every=timedelta(seconds=CELERY_TASK_SCHEDULER_IN_SEC))
 def send_reports_to_report_server():
 
     mimetype = 'application/json'
