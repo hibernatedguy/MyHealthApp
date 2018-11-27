@@ -52,15 +52,15 @@ myhealthapp
     └── test_flaskr.py
 ```
 
-> applications/* folder contains pluggable apps, which can be re used in some other projects
-> applications/<app_name>/models.py contains db-model structure
-> applications/<app_name>/views.py contains ClassBasedViews to handle HTTP requests
-> docs/* holds all documentation related stuff
-> manage.py subcommands to execute multiple tasks like, runserver, runtests, migratedb etc.
-> requirements.txt contains package information
-> config/ folder contains all configuration and secrets of project
-> tests/ folder contains all test cases.
-> reporting_tasks.py to run celery job in background
+- applications/* folder contains pluggable apps, which can be re used in some other projects
+- applications/<app_name>/models.py contains db-model structure
+- applications/<app_name>/views.py contains ClassBasedViews to handle HTTP requests
+- docs/* holds all documentation related stuff
+- manage.py subcommands to execute multiple tasks like, runserver, runtests, migratedb etc.
+- requirements.txt contains package information
+- config/ folder contains all configuration and secrets of project
+- tests/ folder contains all test cases.
+- reporting_tasks.py to run celery job in background
 
 # Create database
 ```

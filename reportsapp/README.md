@@ -34,6 +34,13 @@ ReportsApp :  Flask with MongoDB.
     └── rest_auth.py
 ```
 
+- reports/* directoru contains apis and report manager
+- reports/manager.py is mongodb wrapper to interact with mongodb for CRUD operations
+- reports/views is api like classbased views
+- utils/rest-auth **authenticate username/password by calling myhealthapp's login api**
+- utils/responsehandler for custom responses
+
+
 # Models
 ```
 User
