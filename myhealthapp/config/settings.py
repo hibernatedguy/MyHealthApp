@@ -10,6 +10,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 # READ SECREJSON FILE
 SECRETS_FILE = os.path.abspath('config/secrets.json')
 CELERY_TASK_SCHEDULER_IN_SEC = 300
+SERVER_PORT = 5000
 
 if os.path.exists(SECRETS_FILE) is False:
     raise Exception(" Please add 'secrets.json' file in config/ folder.")

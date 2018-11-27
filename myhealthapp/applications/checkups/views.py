@@ -14,7 +14,7 @@ class UserCheckupMethodView(MethodView):
     single_checkup_serializer = CheckupSerializer
     checkups_serializer = CheckupsSerializer
 
-    def get(self, current_user, username=None):
+    def get(self, current_user=None, username=None):
         '''
         1. fetch signle user if username exists else return all users
         2. if username provided in url-param return user-detail else return 404-DoesNotExists
@@ -26,7 +26,7 @@ class UserCheckupMethodView(MethodView):
             output = self.checkups_serializer.dump(user.checkups).data
             return jsonify(output), 200
 
-    def post(self, current_user, username=None):
+    def post(self, current_user=None, username=None):
         data = request.get_json()
         # support multiple checkup reports and single report
 
@@ -68,7 +68,7 @@ class UserCheckupMethodView(MethodView):
             db.session.commit()
         return jsonify({'details': 'User checkup created'}), 201
 
-    def delete(self, current_user, username=None, checkup_id=None):
+    def delete(self, current_user=None, username=None, checkup_id=None):
         user = User.query.filter_by(username=username).first()
         checkup = Checkup.query.filter_by(checkup_for=user, id=checkup_id).first()
         if checkup:
@@ -81,7 +81,7 @@ class UserCheckupMethodView(MethodView):
 class BulkCheckupReportMethodView(MethodView):
     checkups_serializer = CheckupsSerializer
 
-    def get(self, current_user):
+    def get(self, current_user=None):
         '''
         1. fetch signle user if username exists else return all users
         2. if username provided in url-param return user-detail else return 404-DoesNotExists
@@ -92,13 +92,12 @@ class BulkCheckupReportMethodView(MethodView):
         output = self.checkups_serializer.dump(checkups).data
         return jsonify(output), 200
 
-    def post(self, current_user):
+    def post(self, current_user=None):
         data = request.get_json()
         # support multiple checkup reports and single report
         # multiple report
         if isinstance(data, list):
             for checkup in data:
-
                 # putting user query here to reuse the whole CheckupMethodView for bulk create.
                 user = User.query.filter_by(username=checkup.get('checkup_for')).first()
 
@@ -132,5 +131,5 @@ class BulkCheckupReportMethodView(MethodView):
             _checkup.checkup_for = user
             db.session.add(_checkup)
             db.session.commit()
-            return jsonify({'details': 'User checkup created'}), 201        
+            return jsonify({'details': 'User checkup created'}), 201
         return jsonify({'details': 'Bad request.'}), 400

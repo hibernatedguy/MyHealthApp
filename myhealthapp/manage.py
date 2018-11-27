@@ -4,7 +4,7 @@ from flask_migrate import Migrate, MigrateCommand
 
 # create environment
 from config import db, create_app
-from config.settings import secrets
+from config.settings import secrets, SERVER_PORT
 from config.flask_celery import make_celery
 
 # Views
@@ -75,7 +75,7 @@ admin.add_view(ModelView(Checkup, sql_alch_db.session))
 
 @manager.command
 def runserver():
-    app.run()
+    app.run(port=SERVER_PORT)
 
 
 if __name__ == '__main__':

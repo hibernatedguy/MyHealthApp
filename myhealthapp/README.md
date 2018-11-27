@@ -1,9 +1,11 @@
 # MyHealthApp
 
-HealthApp : Health App written in flask with postgreSQL.
+myhealthapp : Health App written in flask with postgreSQL.
+
 
 # Project Structure
 ```
+myhealthapp
 ├── README.md
 ├── __pycache__
 ├── applications
@@ -61,7 +63,28 @@ HealthApp : Health App written in flask with postgreSQL.
 > reporting_tasks.py to run celery job in background
 
 # Create database
+```
 psql -U postgres -c "create database development_db"
+psql -U postgres -c "create database testing_db"
+```
+or 
+```
+createdb development_db
+createdb testing_db
+```
+
+# Install packages
+pip install -r requirements.txt
+
+# App run and db setup
+```
+python manage.py runserver
+```
+
+# Testing
+```
+py.test or pytest
+```
 
 # API Doc
 [POSTMAN Doc](https://documenter.getpostman.com/view/227044/RzfassBD)

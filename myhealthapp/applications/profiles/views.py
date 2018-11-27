@@ -16,7 +16,7 @@ class UserMethodView(MethodView):
     single_user_serializer = UserSerializer
     users_serializer = UsersSerializer
 
-    def get(self, current_user, username=None):
+    def get(self, username=None, current_user=None):
         '''
         1. fetch signle user if username exists else return all users
         2. if username provided in url-param return user-detail else return 404-DoesNotExists
@@ -31,7 +31,7 @@ class UserMethodView(MethodView):
         output = self.users_serializer.dump(user).data
         return jsonify(output), 200
 
-    def post(self, current_user):
+    def post(self, current_user=None):
         '''
         CREATE new user
         '''
@@ -45,7 +45,7 @@ class UserMethodView(MethodView):
         except IntegrityError:
             return jsonify({'details': 'User with same information is already exists.'}), 400
 
-    def delete(self, current_user, username):
+    def delete(self, username=None, current_user=None, ):
         user = User.query.filter_by(username=username).first()
         if user:
             db.session.delete(user)
@@ -53,7 +53,7 @@ class UserMethodView(MethodView):
             return jsonify({'details': '{} Deleted'.format(username)}), 204
         return jsonify({'details': '{} Does not Exists'.format(username)}), 404
 
-    def put(self, current_user, username):
+    def put(self, username, current_user=None):
         # delete a single user
         user = User.query.filter_by(username=username).first()
         try:

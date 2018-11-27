@@ -12,6 +12,7 @@ __all__ = ['RestAuthAPI']
 
 class RestAuthAPI(MethodView):
     def get(self):
+        import ipdb;ipdb.set_trace()
         auth = request.authorization
         if auth and auth.password and auth.username:
             _request = requests.get(AUTHENTICATION_SERVER_URL, auth=HTTPBasicAuth(auth.username, auth.password))

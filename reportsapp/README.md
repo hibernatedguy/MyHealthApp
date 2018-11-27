@@ -44,6 +44,19 @@ Reports
     report_details  
 ```
 
+# Install packages
+pip install -r requirements.txt
+
+# App run and db setup
+```
+python manage.py runserver
+```
+
+# Testing
+```
+py.test or pytest
+```
+
 # APIs
 [Postman Api Doc](https://documenter.getpostman.com/view/227044/RzfZQD9a)
 
