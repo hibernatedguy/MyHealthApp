@@ -9,6 +9,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 # READ SECREJSON FILE
 SECRETS_FILE = os.path.abspath('config/secrets.json')
+AUTHENTICATION_SERVER_URL = 'http://localhost:5000/login/'
 
 if os.path.exists(SECRETS_FILE) is False:
     raise Exception(" Please add 'secrets.json' file in config/ folder.")
