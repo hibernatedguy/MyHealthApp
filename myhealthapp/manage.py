@@ -43,7 +43,7 @@ checkup_reports_view = token_required(BulkCheckupReportMethodView.as_view('check
 
 # ---- START OF URLS BLOCK
 # user
-app.add_url_rule('/users/', defaults={'username': None}, view_func=user_view, methods=['GET'])
+app.add_url_rule('/users/', view_func=user_view, methods=['GET'])
 app.add_url_rule('/users/', view_func=user_view, methods=['POST'])
 app.add_url_rule('/users/<string:username>/', view_func=user_view, methods=['GET', 'PUT', 'DELETE'])
 
