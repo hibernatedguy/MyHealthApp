@@ -74,11 +74,23 @@ createdb testing_db
 ```
 
 # Install packages
+```
 pip install -r requirements.txt
+```
 
 # App run and db setup
 ```
+
+# db setup and migrations
+
+python manage.py db init
+python manage.py db migrate
+python manage.py db upgrade
+
+
+# runserver
 python manage.py runserver
+
 ```
 
 # Testing
