@@ -89,6 +89,26 @@ py.test or pytest
 # API Doc
 [POSTMAN Doc](https://documenter.getpostman.com/view/227044/RzfassBD)
 
+# API Endpoint
+
+```
+USERS       [ GET/POST ]
+/users/
+
+USERS CHECKUP REPORTS  [ GET/POST ]
+/users/<user-id>/checkups/
+
+BULK REPORT CREATION [POST]
+/checkups/
+
+BULK REPORT VIEW  [ GET ]
+/checkups/
+
+REST_AUTH
+/login/
+/registration/
+```
+
 # Postman Collection
 visit **docs/** directory
 

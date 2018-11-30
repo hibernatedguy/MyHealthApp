@@ -64,8 +64,30 @@ python manage.py runserver
 py.test or pytest
 ```
 
-# APIs
+# APIs Doc
 [Postman Api Doc](https://documenter.getpostman.com/view/227044/RzfZQD9a)
+
+
+# API Design
+
+```
+USERS       [ GET/POST ]
+/users/
+
+USERS CHECKUP REPORTS  [ GET/POST ]
+/users/<user-id>/reports/
+
+BULK REPORT CREATION [POST]
+/reports/
+
+BULK REPORT VIEW  [ GET ]
+/reports/
+
+REST_AUTH
+/login/
+```
+
+
 
 # Tests
 - Postman E2E test is available with postmanin collection in **docs/** directory
