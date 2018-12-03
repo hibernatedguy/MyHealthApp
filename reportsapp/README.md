@@ -52,7 +52,9 @@ Reports
 ```
 
 # Install packages
+```
 pip install -r requirements.txt
+```
 
 # App run and db setup
 ```

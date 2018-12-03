@@ -125,10 +125,12 @@ REST_AUTH
 visit **docs/** directory
 
 # Celery
-To start the Celery workers, you need both a Celery worker and a Beat instance running in parallel. Here are the commands for running them:
+To start the Celery Background Task, you need both Celery Worker and Beat instance running in parallel. Here are the commands for running them:
 
+```
 celery -A manage.celery worker --loglevel=info
 celery beat -A manage.celery --loglevel=info
+```
 
 * please make sure redis-server is running in background
 

@@ -29,7 +29,7 @@ Project contains two services along with documentation,
 
 # Project Design Pattern
 
-Highly inspired by django-design-patters.
+Highly inspired by django-design-patterns.
 Following DRY principle. All applications are reusable and dependencies are kept in one folder. 
 
 > #### Q. Why Application Folders?
