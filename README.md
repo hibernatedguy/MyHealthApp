@@ -14,7 +14,7 @@ Project contains two services along with documentation,
 
 # System Design
 
-![alt system-design](https://github.com/codetarsier/MyHealthApp/blob/7ae896aba01040c8a575c4477f604dcdae62159d/docs/healthcheckup-system-design.jpg?raw=true)
+![alt system-design](https://raw.githubusercontent.com/codetarsier/MyHealthApp/master/docs/healthcheckup-system-design.jpg?raw=true)
 
 ### System Workflow
 1. User comes for health checkup
