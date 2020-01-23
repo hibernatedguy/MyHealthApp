@@ -8,7 +8,7 @@ Organziation is having a trouble with querying it's single source of truth datab
 
 Project contains two services along with documentation,
 - myhealthapp : to collect reports from doctors and machine
-- reportsapp : for client's to brow the reports.
+- reportsapp : for client's to browse the reports.
 
 **Please go through myhealthapp/readme.md and reportsapp/readme.md file for more information**
 
